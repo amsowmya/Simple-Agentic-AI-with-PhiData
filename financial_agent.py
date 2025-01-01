@@ -8,8 +8,6 @@ import openai
 
 load_dotenv()
 
-openai.api_key=os.getenv('OPENAI_API_KEY')
-
 
 # web search agent
 web_search_agent = Agent(
@@ -34,10 +32,12 @@ finance_agent = Agent(
 )
 
 multi_ai_agent = Agent(
+    model=Groq(id="llama3-groq-70b-8192-tool-use-preview"),
     team=[web_search_agent, finance_agent],
     instructions=["Always include sources", "Use tables to display the data"],
     show_tool_calls=True,
     markdown=True
 )
 
-multi_ai_agent.print_response("Summarize analyst recommendation and share the latest news for NVDA", stream=True)
+# multi_ai_agent.print_response("Summarize analyst recommendation and share the latest news for NVIDIA", stream=True)
+multi_ai_agent.print_response("Summarize NVIDIA stock", stream=True)
